@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng Ngày 20/10 - Những Đóa Hoa Yêu Thương</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0d0210;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Hiệu ứng nền đom đóm / hạt lung linh */
+        canvas#bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* --- BƯỚC 1: MÀN HÌNH CHÍNH --- */
+        #step1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .header-tag {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            color: #ff99c8;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .flower-icon {
+            font-size: 80px;
+            filter: drop-shadow(0 0 20px #ff4d8d);
+            animation: pulse 2s infinite alternate;
+            margin-bottom: 15px;
+        }
+
+        .sub-title {
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            color: #ffc2d1;
+            margin-bottom: 10px;
+        }
+
+        .main-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: #ffe5ec;
+            margin-bottom: 35px;
+            text-shadow: 0 0 10px rgba(255, 182, 193, 0.5);
+            line-height: 1.4;
+        }
+
+        .btn-main {
+            background: linear-gradient(135deg, #ff4d8d, #8f00ff);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 77, 141, 0.6);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-main:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 77, 141, 0.9);
+        }
+
+        /* --- BƯỚC 2: PHONG THƯ & THIỆP CHÚC --- */
+        #step2 {
+            display: none;
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        .letter-card {
+            background: rgba(255, 240, 245, 0.95);
+            color: #4a1525;
+            border-radius: 20px;
+            padding: 35px 25px;
+            box-shadow: 0 10px 40px rgba(255, 77, 141, 0.3);
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            border: 2px solid #ffb6c1;
+        }
+
+        .letter-card h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: #d63384;
+            margin-bottom: 20px;
+        }
+
+        .letter-content {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            text-align: justify;
+            margin-bottom: 25px;
+        }
+
+        .letter-content p {
+            margin-bottom: 15px;
+        }
+
+        .letter-footer {
+            font-weight: 600;
+            color: #d63384;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* --- BƯỚC 3: PHÁO HOA TRÁI TIM & KẾT THÚC --- */
+        #step3 {
+            display: none;
+            animation: zoomIn 1s ease-in-out forwards;
+        }
+
+        .heart-sparkle {
+            font-size: 100px;
+            margin-bottom: 20px;
+            animation: heartBeat 1.2s infinite;
+        }
+
+        .final-title {
+            font-size: 1rem;
+            letter-spacing: 3px;
+            color: #ff99c8;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .final-big-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef, #fe9a8b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .final-year {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ff4d8d;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255, 77, 141, 0.8);
+        }
+
+        .final-quote {
+            font-style: italic;
+            color: #ffe5ec;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            margin-bottom: 30px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hiệu ứng hạt nền -->
+    <canvas id="bgCanvas"></canvas>
+
+    <div class="container">
+        
+        <!-- BƯỚC 1: MÀN HÌNH MỞ ĐẦU -->
+        <div id="step1">
+            <div class="header-tag">NHỮNG ĐÓA HOA YÊU THƯƠNG • 20/10</div>
+            <div class="flower-icon">🌷</div>
+            <div class="sub-title">20.10 — GỬI TẶNG CÁC BẠN NỮ 10D2 </div>
+            <h1 class="main-title">Ngày hôm nay, có một hộp thư và món quà đặc biệt dành riêng cho các bạn...</h1>
+            <button class="btn-main" onclick="goToStep(2)">
+                <span>🎁 MỞ HỘP THƯ & MÓN QUÀ</span>
+            </button>
+        </div>
+
+        <!-- BƯỚC 2: HỘP THƯ LỜI CHÚC -->
+        <div id="step2">
+            <div class="letter-card">
+                <h2>Gửi các bạn nữ 10d2! 🌷</h2>
+                <div class="letter-content">
+                    <p>Chúc các bạn một ngày 20/10 thật hạnh phúc, luôn xinh tươi, rạng rỡ và tràn ngập niềm vui theo cách riêng của mình.</p>
+                    <p> Cảm ơn các bạn vì đã luôn là những mảnh ghép tuyệt vời, tạo nên sự dễ thương và ấm áp cho lớp chúng ta!.</p>
+                    <p>chúc các bạn nữ luôn xinh đẹp, tràn đầy năng lượng và gặt hái được thật nhiều thành công trong học tập.</p>
+                </div>
+                <div class="letter-footer">Gửi tặng đến các bạn nữ 12d2 💕</div>
+                <br>
+                <button class="btn-main" onclick="goToStep(3)">
+                    <span>✨ NHẬN ĐIỀU BẤT NGỜ CUỐI CÙNG</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- BƯỚC 3: MÀN HÌNH BẤT NGỜ / PHÁO HOA TRÁI TIM -->
+        <div id="step3">
+            <div class="heart-sparkle">💖</div>
+            <div class="final-title">CHÚC MỪNG NGÀY PHỤ NỮ VIỆT NAM</div>
+            <h1 class="final-big-text">CHÚC CÁC BẠN NỮ 12D2</h1>
+            <div class="final-year">20 . 10</div>
+            <div class="final-quote">
+                "Dành tặng người phụ nữ xinh đẹp và tuyệt vời nhất!"
+            </div>
+            <div class="btn-group">
+                <button class="btn-secondary" onclick="goToStep(1)">🔄 TRẢI NGHIỆM LẠI</button>
+                <button class="btn-secondary" onclick="goToStep(2)">📜 ĐỌC LẠI HỘP THƯ</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chuyển bước
+        function goToStep(stepNumber) {
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step3').style.display = 'none';
+
+            if (stepNumber === 1) {
+                document.getElementById('step1').style.display = 'flex';
+            } else if (stepNumber === 2) {
+                document.getElementById('step2').style.display = 'block';
+            } else if (stepNumber === 3) {
+                document.getElementById('step3').style.display = 'block';
+                createHeartBurst(); // Kích hoạt hiệu ứng pháo hoa trái tim
+            }
+        }
+
+        // Tạo hiệu ứng hạt kim tuyến bay trên background
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const particles = [];
+        const particleCount = 60;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 4 + 1,
+                speedY: -(Math.random() * 1 + 0.5),
+                speedX: Math.random() * 0.6 - 0.3,
+                color: `rgba(255, ${Math.floor(Math.random() * 100 + 100)}, 180, ${Math.random() * 0.7 + 0.3})`
+            });
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.y += p.speedY;
+                p.x += p.speedX;
+
+                if (p.y < 0) {
+                    p.y = canvas.height;
+                    p.x = Math.random() * canvas.width;
+                }
+
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // Hiệu ứng pháo hoa bung nở khi đến bước 3
+        function createHeartBurst() {
+            for (let i = 0; i < 40; i++) {
+                const particle = document.createElement('div');
+                particle.innerHTML = '✨';
+                particle.style.position = 'fixed';
+                particle.style.left = '50%';
+                particle.style.top = '40%';
+                particle.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '99';
+                
+                const angle = Math.random() * Math.PI * 2;
+                const dist = Math.random() * 200 + 50;
+                const x = Math.cos(angle) * dist;
+                const y = Math.sin(angle) * dist;
+
+                particle.style.transition = 'all 1s ease-out';
+                document.body.appendChild(particle);
+
+                setTimeout(() => {
+                    particle.style.transform = `translate(${x}px, ${y}px) scale(0)`;
+                    particle.style.opacity = '0';
+                }, 50);
+
+                setTimeout(() => {
+                    particle.remove();
+                }, 1050);
+            }
+        }
+    </script>
+</body>
+</html>
